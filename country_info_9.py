@@ -1,6 +1,13 @@
 import streamlit as st  
 import matplotlib.pyplot as plt 
-import plotly.express as px  
+import plotly.express as px 
+
+# Dictionary for country flags
+country_flags = {
+    "palestine": "https://i0.wp.com/www.middleeastmonitor.com/wp-content/uploads/2021/12/20211210_2_51256406_71491009.jpg?fit=1200%2C800&ssl=1",
+    "jordan": "https://media.istockphoto.com/id/182826898/photo/jordan-flag.jpg?s=612x612&w=0&k=20&c=fgvRQ5EmJQwta-Su75eDrN5EuI5RWDRAkGvmOcU4TQM=",
+    "egypt": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_Egypt.svg/1920px-Flag_of_Egypt.svg.png"
+}
 
 # Function to get country information  
 country_data = { 
@@ -40,12 +47,16 @@ def get_country_info(country):
 
 # Set the title of the app  
 st.title("Country Information Web App")  
-
-# Add the Palestinian flag  
-st.image("https://i0.wp.com/www.middleeastmonitor.com/wp-content/uploads/2021/12/20211210_2_51256406_71491009.jpg?fit=1200%2C800&ssl=1", width=200)  
-
+ 
 # Search bar  
 country_name = st.text_input("Enter the name of the country  (e.g. Palestine, Jordan, Egypt):", "Palestine")   
+
+# Add the flag based on the country selected
+flag_url = country_flags.get(country_name.lower(), "")
+if flag_url:
+    st.image(flag_url, width=200)
+else:
+   st.warning("Flag not available.")
 
 # Retrieve country information  
 country_info = get_country_info(country_name)  
